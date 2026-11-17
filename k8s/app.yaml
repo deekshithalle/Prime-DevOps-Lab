@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prime-lab
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prime-app
+  namespace: prime-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prime-app
+  template:
+    metadata:
+      labels:
+        app: prime-app
+    spec:
+      containers:
+        - name: prime-app
+          image: prime-lab:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prime-app
+  namespace: prime-lab
+spec:
+  selector:
+    app: prime-app
+  ports:
+    - port: 80
+      targetPort: 8081
+  type: ClusterIP

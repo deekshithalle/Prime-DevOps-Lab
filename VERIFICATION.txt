@@ -1,0 +1,12 @@
+# Verification performed for this package
+- Java compiled targeting Java 21.
+- All 13 prime tests passed.
+- Command-line examples 17 and 12 passed.
+- Web API returned prime=true for 17 and prime=false for 1.
+- Docker image prime-lab:local built successfully and passed its tests.
+- Docker Desktop Kubernetes deployed two ready Pods in namespace prime-lab.
+- Browser through Kubernetes Service returned "17 is a prime number."
+- Jenkins pipeline is supplied for user setup. Registry push and Jenkins execution
+  require the user's repository, Docker Hub token and kubeconfig credentials.
+
+Simplified algorithm update: Java 21 compilation and all 13 tests passed. Docker/Kubernetes verification above refers to the earlier build. Rebuild the image to deploy this source update.

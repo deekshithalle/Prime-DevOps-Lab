@@ -1,0 +1,7 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label":"Test prime program","type":"shell","command":"powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File ./run.ps1 -TestOnly","problemMatcher":[]},
+    {"label":"Run browser app","type":"shell","command":"powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File ./run.ps1","problemMatcher":[]}
+  ]
+}

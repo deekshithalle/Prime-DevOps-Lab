@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prime Number Lab</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5f4;color:#173b37;font:18px system-ui,sans-serif}
+main{max-width:760px;margin:10vh auto;padding:34px}h1{font-size:clamp(36px,6vw,64px);line-height:1.1;font-weight:600}
+p{line-height:1.6}label{display:block;font-weight:600;margin-bottom:12px}input{font:inherit;padding:14px;border:1px solid #91aaa5;border-radius:6px;max-width:100%;width:320px}
+button{font:inherit;background:#24685b;color:white;border:0;padding:15px 22px;border-radius:6px;cursor:pointer}
+form{margin:35px 0}#result{min-height:80px;font-size:25px;padding:16px 0}small{display:block;color:#536c67;margin-top:40px}
+</style>
+<main><h1>Is your number prime?</h1><p>A prime number is greater than 1 and has exactly two positive divisors, 1 and itself.</p>
+<form id="form"><label for="number">Enter a whole number</label><input id="number" type="text" inputmode="numeric" value="17" required aria-describedby="hint">
+<button id="check">Check number</button><p id="hint">Use a value from -2147483648 to 2147483647.</p></form>
+<div id="result" role="status" aria-live="polite"></div><small>Prime Number Program - DevOps External Lab</small></main>
+<script>
+const form=document.querySelector('#form'),result=document.querySelector('#result'),button=document.querySelector('#check');
+form.addEventListener('submit',async event=>{
+event.preventDefault();button.disabled=true;result.textContent='Checking...';
+try{
+const response=await fetch('/api/prime?number='+encodeURIComponent(document.querySelector('#number').value.trim()));
+const data=await response.json();if(!response.ok)throw Error(data.error);
+result.textContent=data.number+(data.prime?' is a prime number.':' is not a prime number.');
+}catch(error){result.textContent=error.message;}finally{button.disabled=false;}
+});
+</script></html>
